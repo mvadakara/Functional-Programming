@@ -1,0 +1,104 @@
+CS-498/598
+Summer 2018
+Assignment 2
+
+Deadline: Wednesday, 6/6/18, 11:59pm
+Name: Martin Vadakara
+
+Save this file as assignment2.txt. Insert your name and answers and dropbox it. Also dropbox triangles.hs from problem 3) below.
+
+(Lists - 13 points)
+1. In ghci, try the following expressions and write what the resulting values are.
+   What is wrong with the ones that give errors?
+
+1:[2,3,4] 
+result: [1,2,3,4]
+
+1:2:3:4:[]
+result:[1,2,3,4]
+
+[1,2,3]:[4..7]
+result: error because of : works as a defintion rather than joining two seprate lists into one list
+
+[1,2,3] ++ [4..7]
+result: [1,2,3,4,5,6,7]
+
+1:['a','b']
+result:error because you can't mix numbers and characters together with a definition
+
+"abc"++"cd"
+result: "abccd"
+
+"a":"bCc"
+result: error because you can't join two distinct characters with cons :
+
+"a" ++ "bCc"
+result: "abCc"
+
+'a':'b'
+result: error because : works as a defintion
+
+'a':"b"
+result: "ab"
+
+[1,4,7] ++ 4:[5:[]]     
+result: error because 4:[5:[]] can't have a defintion within another defintion.  4:[5] work as well as [5:[]] but you
+can't use it together.
+
+[True,True:[]]
+result: error because the : is confused in which it become because of the two variables [True,True before the :]
+
+True:[True,False]
+result: [True,True,False]
+
+
+
+(15 points)
+2. A mathematician named Ulam proposed generating a sequence of numbers from any
+   positive integer n (n > 0) as follows:
+
+          • If n is 1, stop.
+          • If n is even, the next number is n/2.
+          • If n is odd, the next number is 3*n + 1.
+          • Continue with this process until reaching 1.
+
+   Here are some sequences for the starting integers 2-7:
+
+          2 ->  1
+          3 -> 10 ->  5 -> 16 ->  8 ->  4 ->  2 ->  1
+          4 ->  2 ->  1
+          5 -> 16 ->  8 ->  4 ->  2 ->  1
+          6 ->  3 -> <repeat Ulam sequence for 3>
+          7 -> 22 -> 11 -> 34 -> 17 -> 52 -> 26 -> 13
+            -> 40 -> 20 -> 10 -> 5 -> <repeat Ulam sequence for 5>
+
+   Write the definition of a function called 'ulam' which takes an integer argument
+   n and returns the Ulam sequence for n as a String:
+
+   -- ulam :: Int -> String
+
+   Haskell has boolean functions called even and odd that you can use.
+
+
+ulam 1 = "1"
+ulam n 
+    | even n = ulam(n `div` 2) 
+    | otherwise = ulam (n-1* 3 + 1) ++ ulam(n-1) 
+Recursion works but is a series of 1s but follows a logical sequence where 14 and 7 are the same 1s 10 and 5 are the same total of 1s as well.
+
+
+
+(15 points)
+3. Write a program, triangles.hs, that prompts for and inputs the 3 edges of a
+   triangle and outputs whether the edges form a valid triangle or not. The triangle
+   is valid if the sum of any two edges is greater than the third edge. For example,
+   if the edges have lengths 1, 2 and 1, that is not a valid triangle. If the edges
+   are 2, 2 and 1, that is a valid triangle.
+
+   In triangles.hs, use a boolean function 'validTriangle' that takes 3 arguments for
+   the 3 triangle edges and returns True if the edges form a valid triangle, else
+   False if they do not form a valid triangle:
+
+	-- validTriangle :: Double -> Double -> Double -> Boolean
+
+   Your program must be compileable using ghc or runnable using runghc.

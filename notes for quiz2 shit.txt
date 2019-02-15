@@ -1,0 +1,2 @@
+ (n `mod` 10) /= 9 = 0
+	| otherwise  = 1 + count9s (n `div` 10)

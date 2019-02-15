@@ -1,0 +1,41 @@
+-- Assignment3
+--main = do
+intsFromTo :: Int -> Int -> [Int] 
+intsFromTo m n 
+ | m > n = []
+ | otherwise =  m : intsFromTo (m+1) n
+
+
+-- 2
+removeOdd :: [Int] -> [Int]
+removeOdd [] = []
+removeOdd (x:xs) = if even x then x : y else y where 
+	y = removeOdd xs
+
+-- 3
+{-countTrue :: Bool -> Int
+	
+countTrue x
+ | x == True = 0
+ | otherwise = 
+ 
+ count :: Int -> Int
+ count 
+-}
+-- 4
+removeOdd' :: [Int] -> [Int]
+removeOdd' lst = [ y | y <- lst, y `mod` 2 == 0] 
+
+
+-- 5
+
+--nonEmptyStr :: String -> Bool
+-- nonEmptyStr x = x
+
+-- 6
+
+replaceEmptyStr :: String -> String
+
+	emptyStr = " "
+	negativeOne = "-1"
+	print map emptyStr negativeOne

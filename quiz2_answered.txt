@@ -1,0 +1,203 @@
+CS-498/598: Functional Programming
+Summer 2018
+Quiz 2
+
+*******************************************************************************
+
+(10 points)
+Problem 1 - count9s
+
+Write the definition of a recursive function 'count9s' that given a non-negative Int n,
+returns the count of the occurrences of 9 as a digit in n, so for example 997 yields 2.
+Note that mod by 10 yields the rightmost digit (126 `mod` 10 is 6), while divide (div) by
+10 removes the rightmost digit (126 `div` 10 is 12).
+
+      -- counts9s :: Int -> Int
+
+The function would work as follows:
+
+      count9s 919      -- result: 2
+      count9s 9        --         1
+      count9s 123      --         0
+
+
+Answer:
+
+count9s n
+   | n == 0          = 0 -- base case; there are no more digits
+   | n `mod` 10 == 9 = 1 + count9s (n `div` 10)
+   | otherwise       = count9s (n `div` 10)
+
+
+Explanation of base case: After enough recursions, n will be single digit.
+                          Single digit n `mod` 10 will be equal to 0.
+
+
+
+(10 points)
+Problem 2 - powerofN
+
+Write the definition of a recursive function 'powerofN' that given a base and n that are
+both 1 or more, returns the value of base to the n power, so powerofN(3, 4) is 81 (3 to
+the power of 4).
+
+      -- powerofN :: Integer -> Integer -> Integer
+
+The function would work as follows:
+
+      powerofN 3 1      -- result: 3
+      powerofN 3 2      --         9
+      powerofN 3 3      --         27
+
+
+Answer:
+
+powerOfN base n
+   | n == 0    = 1 -- base case
+   | otherwise = base * powerOfN base (n - 1)
+
+
+
+(10 points)
+Problem 3 - removeX
+
+Write the definition of a recursive function 'removeX' that given a String, returns a new
+String where all the 'x' chars (lower case x) have been removed.
+
+      -- removeX :: String -> String
+
+The function would work as follows:
+
+      removeX "xaxb"    -- result: "ab"
+      removeX "abc"     --         "abc"
+      removeX "xx"      --         ""
+
+
+Answer:
+
+removeX [] = [] -- base case
+removeX (s:tr)
+   | s /= 'x'  = s : removeX tr
+   | otherwise = removeX tr
+
+
+
+(10 points)
+Problem 4 - removeX'
+
+Write a removeX' function definition (non-recursive) using a list comprehension. The
+function must do the same thing as removeX from problem 3.
+
+
+Answer:
+
+removeX' str = [ ch | ch <- str, ch /= 'x' ]
+
+
+
+(15 points)
+Problem 5 - removeX''
+
+Write a removeX'' function definition (non-recursive).  The function definition of
+removeX'' must contain a call to 'filter' to filter out the 'x' chars. The removeX''
+function must do the same thing as removeX and removeX'.
+
+Recall that the 'filter' function takes a Bool function as the first argument. Your
+removeX'' function may include a local function definition or lambda expression (See Week
+4 notes) to use with filter.
+
+
+Answer:
+
+-- Use local function definition using 'where':
+removeX'' str = filter nox str
+                    where
+                        nox ch = ch /= 'x'
+
+                    -- longer: nox ch = if ch /= 'x' then True else False
+
+
+-- Use local function definition using 'let..in':
+removeX'' str = let nox ch = ch /= 'x'
+                in filter nox str
+
+
+-- Use lambda expression:
+removeX'' str = filter (\ ch -> ch /= 'x') str
+
+
+
+(10 points)
+Problem 6 - dayAbbr
+
+Say that you want to use the 'map' function to replace the Ints between 0 and 6 in a list
+with corresponding String day abbreviations, where 0 -> "Sun", 1 -> "Mon", ..., 6 ->
+"Sat". If an Int value in the list is not between 0 and 6, the corresponding String would
+be "NA". The map would be used as follows:
+
+   map dayAbbr [0,6,7,1,3,4,2,5,8]
+   -- result: ["Sun","Sat","NA","Mon","Wed","Thu","Tue","Fri","NA"]
+
+Write a working definition for the dayAbbr function below:
+
+   -- dayAbbr :: Int -> String
+
+
+Answer:
+
+dayAbbr day
+   | day >= 0 && day <= 6 = dayAbbrevs !! day
+   | otherwise            = "NA"
+   where
+       dayAbbrevs = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
+
+
+
+(15 points)
+Problem 7 - Lambda functions
+
+a. You need to write a map that given a list of integers changes the sign of all negative
+   integers in the list:
+
+      map (lambda) [-1, 0, 5, -10, -20] -- result: [1,0,5,10,20]
+
+   What lambda function can you substitute for (lambda)?
+   (You can use the abs function in the lambda.)
+
+
+Answer:
+
+(\ i -> abs i)
+
+
+
+b. You need to write a filter to remove all empty Strings in a list of Strings. The filter
+   would be used as follows:
+
+      filter (lambda) ["1", "2", "", "4", "", "6"] -- result: ["1","2","4","6"]
+
+   What lambda function can you substitute for (lambda)?
+
+
+Answer:
+
+(\ s -> s /= "")
+
+or
+
+(\ s -> if s /= "" then True else False)
+
+
+
+c. You need to write a map that given a list of lists, returns a list of the list maximums.
+
+      map (lambda) [[1, 3], [2, 1, 5], [8, 7], [0], [-10, -1]] -- result: [3,5,8,0,-1]
+
+   What lambda function can you substitute for (lambda)?
+
+Answer:
+
+(\ lst -> maximum lst)
+
+
+

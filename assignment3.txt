@@ -1,0 +1,48 @@
+-- Assignment3
+-- Martin Vadakara
+intsFromTo :: Int -> Int -> [Int] 
+intsFromTo m n 
+ | m > n = []
+ | otherwise =  m : intsFromTo (m+1) n
+
+
+-- 2
+removeOdd :: [Int] -> [Int]
+removeOdd [] = []
+removeOdd (x:xs) = if even x then x : y else y where 
+	y = removeOdd xs
+
+-- 3
+{-
+countTrue :: [Bool] -> Int
+	
+countTrue x 
+ | x == []
+ | otherwise = count ++ [True]
+ 
+ count :: Int -> Int
+ count [] = [] 
+ count (x: xs) = if x then x : y else y where 
+	y = count xs 
+-}
+-- 4
+removeOdd' :: [Int] -> [Int]
+removeOdd' lst = [ y | y <- lst, y `mod` 2 == 0] 
+
+
+
+-- 5
+
+--nonEmptyStr :: String -> Bool
+ 
+ emptyStr x = x < (" ")
+ nonEmptyStr = filter emptyStr 
+-- 6
+
+replaceEmptyStr :: String -> String
+ 
+   
+  replaceEmptyStr = ""
+  replaceEmpty1 = "-1" 
+  
+  replaceEmptyStr x = map replaceEmpty1 x

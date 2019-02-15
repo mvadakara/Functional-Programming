@@ -1,0 +1,119 @@
+CS-498/598: Functional Programming
+Summer 2018
+Quiz 1
+
+*******************************************************************************
+
+(20 points)
+Problem 1 - starman.hs modifications:
+
+See the starman.hs example at https://bit.ly/2Jn200I. Make the following modifications:
+
+   a - Modify the 'turn' function to use guards instead of if-then-else expressions.
+
+
+         -- Turn function
+         -- Called each time that the player is prompted for a letter.
+         -- Would look better using guards (|).
+         turn :: String -> String -> Int -> IO ()
+         turn word display nStars
+             | nStars == 0     = putStrLn "You lose."
+             | word == display = putStrLn "You win!"
+             | otherwise       = getGuess word display nStars -- game continues
+               
+
+   b - Add a main function so that starman.hs can be run using 'runghc starman.hs'.
+       The main function must do the following:
+
+            - Display "Enter the secret word:"
+            - Input the secret word
+            - Display "Enter the number of guesses allowed (stars):"
+            - Input the number of stars
+            - Call the 'starman' function with the secret word and number of stars 
+              arguments to begin the game.
+
+
+       When you run the modified program, it must look like the following:
+
+         Enter the secret word:
+         foobar
+         Enter the number of guesses allowed:
+         4
+         ------  ****
+           Enter your guess:
+
+
+         main = do 
+                  putStrLn "Enter the secret word:"
+                  secretword <- getLine
+                  putStrLn "Enter the number of guesses allowed:"
+                  stars <- getLine
+                  let nStars = read stars :: Int
+                  starman secretword nStars
+
+
+
+--------------------------------------------------------------------------------
+For the following 3 problems, the functions must not contain any I/O. Write only
+the function definitions. Do not include a main function.
+--------------------------------------------------------------------------------
+
+(15 points)
+Problem 2 - largestOfThree function
+
+Write a function called largestOfThree that returns the largest of three Int
+inputs.
+
+            largestOfThree 1 2 3       -- returns 3
+            largestOfThree 2 2 1       -- returns 2
+            largestOfThree 3 3 3       -- returns 3
+
+   -- largestOfThree :: Int -> Int -> Int -> Int
+
+         largestOfThree a b c
+            | a >= b && a >= c = a
+            | b >= a && b >= c = b
+            | otherwise        = c
+
+         -- largestOfThree a b c = max a (max b c)
+
+         -- largestOfThree a b c = maximum [a, b, c]
+
+
+
+(15 points)
+Problem 3 - comboString function
+
+Write a function called comboString that given 2 strings, a and b, returns a
+string of the form short+long+short, with the shorter string on the outside and
+the longer string on the inside. The strings must not be the same length, but
+they may be empty (length 0). If the strings are the same length, it must return
+the empty string. 
+
+            comboString "Hello" "hi"  -- returns "hiHellohi"
+            comboString "hi" "Hello"  -- returns "hiHellohi"
+            comboString "aaa" "b"     -- returns "baaab"
+
+   -- comboString :: String -> String -> String
+
+   comboString str1 str2
+      | length str1 > length str2 = str2 ++ str1 ++ str2
+      | length str2 > length str1 = str1 ++ str2 ++ str2
+      | otherwise                 = "" -- or "Input strings can't be of the same length."
+
+
+
+
+(15 points)
+Problem 4 - minMaxPair function
+
+Write a function called minMaxPair that given a list, returns a tuple (pair)
+containing the minimum and maximum. The function must be applicable to any list.
+Note: Haskell has functions called 'minimum' and 'maximum'.
+
+            minMaxPair "Aloha"         -- returns ('A','o')
+            minMaxPair [3, 5, 8, 1, 0] -- returns (0,8)
+            minMaxPair [10, 9 .. (-5)] -- returns (-5,10)
+
+
+         minMaxPair lst = (minimum lst, maximum lst)
